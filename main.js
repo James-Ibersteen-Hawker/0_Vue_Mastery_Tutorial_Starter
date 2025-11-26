@@ -3,11 +3,11 @@ const app = Vue.createApp({
     return {
       product: "Socks",
       description: "These socks are woolly and wonderful!",
-      image: "./assets/images/socks_green.jpg",
+      selectedVariant: 0,
       url: "https://google.com",
       inventory: 100,
-      inStock: true,
       activeClass: true,
+      brand: "Vue Mastery",
       onSale: true,
       details: ["50% cotton", "30% wool", "20% polyester"],
       variants: [
@@ -15,11 +15,15 @@ const app = Vue.createApp({
           id: 2234,
           color: "green",
           image: "./assets/images/socks_green.jpg",
+          quantity: 50,
+          sale: true,
         },
         {
           id: 2235,
           color: "blue",
           image: "./assets/images/socks_blue.jpg",
+          quantity: 0,
+          sale: false,
         },
       ],
       sizes: ["sm", "reg", "lg", "xxl"],
@@ -33,8 +37,22 @@ const app = Vue.createApp({
     removeFromCart() {
       this.cart--;
     },
-    updateImage(variantImage) {
-      this.image = variantImage;
+    updateVariant(index) {
+      this.selectedVariant = index;
+    },
+  },
+  computed: {
+    title: function () {
+      return `${this.brand} ${this.product}`;
+    },
+    image: function () {
+      return this.variants[this.selectedVariant].image;
+    },
+    inStock: function () {
+      return this.variants[this.selectedVariant].quantity > 0;
+    },
+    sale: function () {
+      return this.variants[this.selectedVariant].sale;
     },
   },
 });

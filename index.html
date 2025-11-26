@@ -22,20 +22,20 @@
             />
           </div>
           <div class="product-info">
-            <h1>{{product}}</h1>
+            <h1>{{title}}</h1>
             <p>{{description}}</p>
-            <p v-if="inventory > 10">In Stock</p>
-            <p v-else-if="inventory <= 10 && inventory > 0">Almost Sold Out</p>
+            <p v-if="inStock">In Stock</p>
+            <!-- <p v-else-if="inventory <= 10 && inventory > 0">Almost Sold Out</p> -->
             <p v-else>Out Stock</p>
-            <p v-show="onSale">On Sale</p>
+            <p v-show="sale">On Sale</p>
             <a :href="url">Google</a>
             <ul>
               <li v-for="detail in details">{{ detail}}</li>
             </ul>
             <div
-              v-for="variant in variants"
+              v-for="(variant, index) in variants"
               :key="variant.id"
-              @mouseover="updateImage(variant.image)"
+              @mouseover="updateVariant(index)"
               class="color-circle"
               :class="{active: activeClass}"
               :style="{backgroundColor: variant.color}"
